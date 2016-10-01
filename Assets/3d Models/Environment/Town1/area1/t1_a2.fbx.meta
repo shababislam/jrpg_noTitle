@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: 8b593a200c7c21343af312d6fa5cd4d1
+timeCreated: 1471643994
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Cube.001
+    100004: Cube.002
+    100006: Cube.003
+    100008: Cube.006
+    100010: Plane
+    100012: Plane.001
+    100014: Plane.002
+    100016: Plane.003
+    100018: Plane.004
+    100020: Plane.006
+    100022: Plane.007
+    100024: Plane.008
+    100026: Plane.009
+    100028: Plane.010
+    100030: Plane.012
+    100032: Plane.059
+    100034: //RootNode
+    400000: Cube
+    400002: Cube.001
+    400004: Cube.002
+    400006: Cube.003
+    400008: Cube.006
+    400010: Plane
+    400012: Plane.001
+    400014: Plane.002
+    400016: Plane.003
+    400018: Plane.004
+    400020: Plane.006
+    400022: Plane.007
+    400024: Plane.008
+    400026: Plane.009
+    400028: Plane.010
+    400030: Plane.012
+    400032: Plane.059
+    400034: //RootNode
+    2300000: Cube
+    2300002: Cube.001
+    2300004: Cube.002
+    2300006: Cube.003
+    2300008: Cube.006
+    2300010: Plane
+    2300012: Plane.001
+    2300014: Plane.002
+    2300016: Plane.003
+    2300018: Plane.004
+    2300020: Plane.006
+    2300022: Plane.007
+    2300024: Plane.008
+    2300026: Plane.009
+    2300028: Plane.010
+    2300030: Plane.012
+    2300032: Plane.059
+    3300000: Cube
+    3300002: Cube.001
+    3300004: Cube.002
+    3300006: Cube.003
+    3300008: Cube.006
+    3300010: Plane
+    3300012: Plane.001
+    3300014: Plane.002
+    3300016: Plane.003
+    3300018: Plane.004
+    3300020: Plane.006
+    3300022: Plane.007
+    3300024: Plane.008
+    3300026: Plane.009
+    3300028: Plane.010
+    3300030: Plane.012
+    3300032: Plane.059
+    4300000: Cube.003
+    4300002: Plane.010
+    4300004: Plane.007
+    4300006: Plane.006
+    4300008: Plane.004
+    4300010: Plane.003
+    4300012: Plane.012
+    4300014: Plane.009
+    4300016: Plane.008
+    4300018: Cube.002
+    4300020: Plane.002
+    4300022: Plane.001
+    4300024: Plane
+    4300026: Cube.006
+    4300028: Cube.001
+    4300030: Cube
+    4300032: Plane.059
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

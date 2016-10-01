@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<CharacterDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <list>
+    <ListEntry>
+      <currPlace>terrain_test</currPlace>
+      <name>Damien 1(Clone) (UnityEngine.Transform)</name>
+      <rotation>
+        <x>0</x>
+        <y>0.9927185</y>
+        <z>0</z>
+        <w>-0.120457128</w>
+        <eulerAngles>
+          <x>0</x>
+          <y>193.83699</y>
+          <z>0</z>
+        </eulerAngles>
+      </rotation>
+      <health>100</health>
+      <currentHealth>100</currentHealth>
+      <posX>26.6725121</posX>
+      <posY>0.01000005</posY>
+      <posZ>30.7905426</posZ>
+    </ListEntry>
+    <ListEntry>
+      <currPlace>terrain_test</currPlace>
+      <name>mainGirl(Clone) (UnityEngine.Transform)</name>
+      <rotation>
+        <x>0.4177695</x>
+        <y>0.5704986</y>
+        <z>-0.4177695</z>
+        <w>0.5704986</w>
+        <eulerAngles>
+          <x>72.42976</x>
+          <y>90</y>
+          <z>0</z>
+        </eulerAngles>
+      </rotation>
+      <health>100</health>
+      <currentHealth>100</currentHealth>
+      <posX>61.8657455</posX>
+      <posY>-21.94761</posY>
+      <posZ>40.3</posZ>
+    </ListEntry>
+  </list>
+</CharacterDatabase>
