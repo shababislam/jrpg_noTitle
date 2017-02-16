@@ -6,9 +6,6 @@ public class Quest : MonoBehaviour {
 	public int questNumber;
 
 	public bool isItemQuest;
-	public string[] tempDialogues;
-	public string[] newDialogues;
-	public DialogueSet tempDialogue;
 
 
 	void Start () {
@@ -16,15 +13,17 @@ public class Quest : MonoBehaviour {
 	}
 	
 	void Update () {
-	
 	}
 
 	public void StartQuest(){
 		gameObject.SetActive(true);
+		GameMaster.questInProgress = true;
+
 	}
 
 	public void EndQuest(){
 		QuestManager.QM.questComplete[questNumber] = true;
+		GameMaster.questInProgress = false;
 		gameObject.SetActive(false);
 	}
 }

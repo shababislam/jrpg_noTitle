@@ -6,10 +6,12 @@ Properties {
     _Color ("Main Color", Color) = (1,1,1,1)
     _MainTex ("Base (RGB) Trans (A)", 2D) = "white" {}
     _Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
-    _ShakeDisplacement ("Displacement", Range (0, 1.0)) = 1.0
+    _ShakeDisplacement ("Displacement", Range (0, 5.0)) = 1.0
     _ShakeTime ("Shake Time", Range (0, 1.0)) = 1.0
     _ShakeWindspeed ("Shake Windspeed", Range (0, 1.0)) = 1.0
-    _ShakeBending ("Shake Bending", Range (0, 1.0)) = 1.0
+    _ShakeBending ("Shake Bending", Range (0, 5.0)) = 1.0
+    		_RampTex ("Ramp", 2D) = "white" {}
+
 }
  
 SubShader {
@@ -18,19 +20,33 @@ SubShader {
    
 CGPROGRAM
 #pragma target 3.0
-#pragma surface surf Lambert alphatest:_Cutoff vertex:vert addshadow
+#pragma surface surf Toon alphatest:_Cutoff vertex:vert addshadow
  
 sampler2D _MainTex;
 fixed4 _Color;
+
 float _ShakeDisplacement;
 float _ShakeTime;
 float _ShakeWindspeed;
 float _ShakeBending;
- 
+float _NormalStrength;
+
 struct Input {
     float2 uv_MainTex;
+    float3 viewDir;
 };
- 
+ sampler2D _RampTex;
+		fixed4 LightingToon (SurfaceOutput s, fixed3 lightDir, fixed atten)
+		{
+			half NdotL = (dot(s.Normal, lightDir))*0.5+0.5; 
+			NdotL = tex2D(_RampTex, fixed2(NdotL, 0.5));
+
+			fixed4 c;
+			c.rgb = s.Albedo * _LightColor0.rgb * NdotL * atten;
+			c.a = s.Alpha;
+
+			return c;
+		}
 void FastSinCos (float4 val, out float4 s, out float4 c) {
     val = val * 6.408849 - 3.1415927;
     float4 r5 = val * val;
@@ -45,7 +61,8 @@ void FastSinCos (float4 val, out float4 s, out float4 c) {
     s =  val + r1 * sin7.y + r2 * sin7.z + r3 * sin7.w;
     c = 1 + r5 * cos8.x + r6 * cos8.y + r7 * cos8.z + r8 * cos8.w;
 }
- 
+
+
  
 void vert (inout appdata_full v) {
    
@@ -82,14 +99,17 @@ void vert (inout appdata_full v) {
     float3 waveMove = float3 (0,0,0);
     waveMove.x = dot (s, _waveXmove);
     waveMove.z = dot (s, _waveZmove);
+    //v.normal = lerp(v.normal, v.normal+_NormalStrength, float3(_LerpSpeed,_LerpSpeed,_LerpSpeed));
     v.vertex.xz -= mul ((float3x3)unity_WorldToObject, waveMove).xz;
    
 }
  
 void surf (Input IN, inout SurfaceOutput o) {
+
     fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
     o.Albedo = c.rgb;
     o.Alpha = c.a;
+  
 }
 ENDCG
 }

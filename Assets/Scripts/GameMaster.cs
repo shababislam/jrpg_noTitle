@@ -12,8 +12,9 @@ public class GameMaster : MonoBehaviour {
 	public static bool GamemasterExists;
 
 	public GameObject Damien;
-	public GameObject Maya;
-	public GameObject Stubbs;
+	public GameObject Tre;
+	//public GameObject Maya;
+	//public GameObject Stubbs;
 	public Camera GFXCam;
 
 	public CharacterDatabase db;
@@ -39,6 +40,14 @@ public class GameMaster : MonoBehaviour {
 	public static OverworldCam overworldCam;
 	public static SmoothFollowCamera smoothFollowCam;
 	public static CanvasRotationFix cr;
+
+	public static int currentQuest;
+	public static int prevQuest;
+	public static bool questInProgress = false;
+
+	public static bool canMove = true;
+	public static bool talking = false;
+
 	
 	void Start () {
 		if(!GamemasterExists){
@@ -47,16 +56,28 @@ public class GameMaster : MonoBehaviour {
 		} else {
 			Destroy(gameObject);
 		}
+
+
+		currentQuest = 0;
+
 		Damien = (GameObject)Instantiate(Damien);
-		Stubbs = (GameObject)Instantiate(Stubbs);
-		Maya = (GameObject)Instantiate(Maya);
+		Tre = (GameObject)Instantiate(Tre);
+		Damien.SetActive(true);
+		Tre.SetActive(true);
+		//Stubbs = (GameObject)Instantiate(Stubbs);
+		//Maya = (GameObject)Instantiate(Maya);
 		characters = new List<GameObject>();
 		characters.Add(Damien);
-		characters.Add(Maya);
-		party.Add(Maya);
-		Stubbs.SetActive(false);
+		characters.Add(Tre);
 
-		Damien.transform.position = new Vector3(350,0,350);
+		party.Add(Tre);
+		//characters.Add(Maya);
+		//party.Add(Maya);
+		//Stubbs.SetActive(false);
+
+		Damien.transform.position = new Vector3(-1640,-26,-1750);
+
+		Tre.transform.position = new Vector3(-1643,-26,-1750);
 
 		if(currentPos != new Vector3(0,0,0)){
 			Damien = GameObject.FindGameObjectWithTag("Player");
@@ -66,15 +87,16 @@ public class GameMaster : MonoBehaviour {
 		partySize = party.Count;
 		BattleCounterReset();
 		mainCam = Camera.main;
-		overworldCam = mainCam.GetComponent<OverworldCam>();
-		smoothFollowCam = mainCam.GetComponent<SmoothFollowCamera>();
+		//overworldCam = mainCam.GetComponent<OverworldCam>();
+		//smoothFollowCam = mainCam.GetComponent<SmoothFollowCamera>();
 		cr = mainCam.GetComponent<CanvasRotationFix>();
+
 
 	}
 
 	public void setPartyPosition(GameObject mc){
 		foreach (GameObject character in party){
-			character.transform.position = mc.transform.position;
+			character.transform.position = mc.transform.position + new Vector3(5,0,5);
 		}
 	}
 
@@ -132,8 +154,14 @@ public class GameMaster : MonoBehaviour {
 			GFXCam.fieldOfView = f;
 		}
 	}
-	
+
+	void Update(){
+		//Debug.Log("Current quest: "+ currentQuest + " | In progress?: " + questInProgress);
+
+	}
+	/*
 	void Update () {
+		
 		BattleCountDown();
 
 		BattleStarts();
@@ -158,7 +186,9 @@ public class GameMaster : MonoBehaviour {
 			LoadGame();
 		}
 	}
-}
+
+*/
+} 
 
 [System.Serializable]
 public class ListEntry{

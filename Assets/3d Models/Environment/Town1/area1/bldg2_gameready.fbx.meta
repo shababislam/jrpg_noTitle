@@ -1,22 +1,32 @@
 fileFormatVersion: 2
-guid: 822847bd2edc5404fa8855784e6e6393
-timeCreated: 1477412449
+guid: 4bb21ab6592b168469f2df13874a75b0
+timeCreated: 1477787274
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Plane
-    100004: Plane.002
+    100002: Cube.002
+    100004: Plane
+    100006: Plane.001
+    100008: Plane.513
     400000: //RootNode
-    400002: Plane
-    400004: Plane.002
-    2300000: Plane
-    2300002: Plane.002
-    3300000: Plane
-    3300002: Plane.002
-    4300000: Plane.002
-    4300002: Plane
+    400002: Cube.002
+    400004: Plane
+    400006: Plane.001
+    400008: Plane.513
+    2300000: Cube.002
+    2300002: Plane
+    2300004: Plane.001
+    2300006: Plane.513
+    3300000: Cube.002
+    3300002: Plane
+    3300004: Plane.001
+    3300006: Plane.513
+    4300000: Plane.001
+    4300002: Plane.513
+    4300004: Cube.002
+    4300006: Plane
   materials:
     importMaterials: 1
     materialName: 0
@@ -46,7 +56,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -57,8 +67,8 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 60
-    normalImportMode: 0
+    normalSmoothAngle: 80
+    normalImportMode: 1
     tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0

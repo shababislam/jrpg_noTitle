@@ -1,7 +1,5 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
 Shader "FX/Water" {
 Properties {
 	_WaveScale ("Wave scale", Range (0.02,0.15)) = 0.063
@@ -43,6 +41,10 @@ CGPROGRAM
 
 uniform float4 _WaveScale4;
 uniform float4 _WaveOffset;
+#if defined(HAS_FOAM)
+uniform float _FoamStrength;
+uniform sampler2D _CameraDepthTexture; //Depth Texture
+#endif
 
 #if HAS_REFLECTION
 uniform float _ReflDistort;
@@ -63,6 +65,10 @@ struct v2f {
 		float2 bumpuv0 : TEXCOORD1;
 		float2 bumpuv1 : TEXCOORD2;
 		float3 viewDir : TEXCOORD3;
+		#if defined(HAS_FOAM)
+			float2 foamuv : TEXCOORD4;
+		#endif
+
 	#else
 		float2 bumpuv0 : TEXCOORD0;
 		float2 bumpuv1 : TEXCOORD1;
@@ -83,6 +89,9 @@ v2f vert(appdata v)
 	temp.xyzw = wpos.xzxz * _WaveScale4 + _WaveOffset;
 	o.bumpuv0 = temp.xy;
 	o.bumpuv1 = temp.wz;
+	#if defined(HAS_FOAM)	
+	o.foamuv = 7.0f * wpos.xz + 0.05 * float2(_SinTime.w, _SinTime.w);
+	#endif
 	
 	// object space view direction (will normalize per pixel)
 	o.viewDir.xzy = WorldSpaceViewDir(v.vertex);
@@ -110,6 +119,10 @@ uniform float4 _RefrColor;
 uniform float4 _HorizonColor;
 #endif
 sampler2D _BumpMap;
+#if defined(HAS_FOAM)
+sampler2D _Foam;
+sampler2D _FoamGradient;
+#endif
 
 half4 frag( v2f i ) : SV_Target
 {

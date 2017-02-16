@@ -10,7 +10,7 @@ Shader "Toon/Lit" {
 		LOD 200
 		
 CGPROGRAM
-#pragma surface surf ToonRamp
+#pragma surface surf ToonRamp fullforwardshadows
 
 sampler2D _Ramp;
 

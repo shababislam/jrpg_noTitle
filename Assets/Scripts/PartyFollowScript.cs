@@ -6,8 +6,8 @@ public class PartyFollowScript : MonoBehaviour {
 	public GameObject target;
 
 	private float distance;
-	private float walkSpeed = 4f;
-	private float runSpeed = 8f;
+	public float walkSpeed = 4f;
+	public float runSpeed = 8f;
 	private Animator anim;
 	bool running;
 	bool walking;
@@ -16,7 +16,7 @@ public class PartyFollowScript : MonoBehaviour {
 	void Start () {
 		findPlayer();
 		anim = GetComponent<Animator>();
-		DontDestroyOnLoad(this);
+		//DontDestroyOnLoad(this);
 
 	}
 	
@@ -48,21 +48,21 @@ public class PartyFollowScript : MonoBehaviour {
 
 	private void follow(){
 		distance = Vector3.Distance(transform.position,target.transform.position);
-		if (distance < 5 && distance > 3){
+		if (distance < 10 && distance > 6){
 			walking = true;
 			running = false;
 			transform.position = Vector3.MoveTowards(transform.position,target.transform.position, walkSpeed * Time.deltaTime);
 			transform.LookAt(target.transform);
 		}
 
-		if (distance > 5){
+		if (distance > 10){
 			running = true;
 			walking = false;
 			transform.position = Vector3.MoveTowards(transform.position,target.transform.position, runSpeed * Time.deltaTime);
 			transform.LookAt(target.transform);
 		} 
 
-		if(distance <= 3){
+		if(distance <= 6){
 			running = false;
 			walking = false;
 		}

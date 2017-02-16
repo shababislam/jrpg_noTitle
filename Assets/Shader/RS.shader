@@ -67,7 +67,7 @@
 
 			// Metallic and smoothness come from slider variables
 			//o.Metallic = _Metallic;
-			//o.Smoothness = _Glossiness;
+			o.Gloss = _Glossiness;
 
 			fixed3 normal = UnpackNormal(tex2D(_Bump, IN.uv_Bump)); 
 			normal.z = normal.z/_BumpDetail; 

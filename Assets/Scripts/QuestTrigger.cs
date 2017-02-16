@@ -19,7 +19,7 @@ public class QuestTrigger : MonoBehaviour {
 
 	}
 
-	void OnTriggerStay(Collider other){
+	void QuestInteraction(Collider other){
 		if(QuestNumber==0){
 			if(Input.GetKeyUp(KeyCode.Space) && other.tag == "Player" && !QuestManager.QM.questComplete[QuestNumber]){
 				if(startQuest && !QuestManager.QM.quests[QuestNumber].gameObject.activeSelf){

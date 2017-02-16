@@ -3,21 +3,24 @@ using System.Collections;
 
 public class NPC_NoMovement : MonoBehaviour {
 
-	public DialogueSet dSet;
+	public GameObject dBox;
 	public bool talking;
 	public Animator anim;
+	Quaternion rotation;
 
 	void Start () {
-		dSet = GetComponent<DialogueSet>();
+		//dSet = GetComponent<DialogueSet>();
+
 		anim = GetComponent<Animator>();
+		rotation = transform.rotation;
 	}
 	
 	void Update () {
-		if(dSet.dBox.activeSelf){
+		if(dBox.activeSelf){
 			talking = true;
 		}
 
-		if(!dSet.dBox.activeSelf){
+		if(dBox.activeSelf){
 			talking = false;
 		}
 
@@ -25,6 +28,8 @@ public class NPC_NoMovement : MonoBehaviour {
 			anim.SetBool("Talking",true);
 		} 
 		if(!talking){
+			this.transform.rotation = Quaternion.Slerp(transform.rotation, rotation,Time.deltaTime*20);
+
 			anim.SetBool("Talking",false);
 		}
 	}
