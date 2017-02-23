@@ -19,7 +19,10 @@ public class PartyFollowScript : MonoBehaviour {
 		//DontDestroyOnLoad(this);
 
 	}
-	
+
+
+	/* modify so that vector3.distance isn't running every frame -- use couroutine */
+
 	void Update () {
 		if(walking){
 			anim.SetBool("Walking",true);

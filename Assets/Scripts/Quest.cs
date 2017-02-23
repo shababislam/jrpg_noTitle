@@ -24,6 +24,8 @@ public class Quest : MonoBehaviour {
 	public void EndQuest(){
 		QuestManager.QM.questComplete[questNumber] = true;
 		GameMaster.questInProgress = false;
+		//EventManager.EM.EnableEvent(questNumber);
+		Debug.Log("Ending quest: "+questNumber);
 		gameObject.SetActive(false);
 	}
 }

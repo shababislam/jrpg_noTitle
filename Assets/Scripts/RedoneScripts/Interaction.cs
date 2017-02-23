@@ -17,7 +17,7 @@ public class Interaction : MonoBehaviour {
 	public bool opening;
 	public bool closing;
 	public float speechBubbleTime = 20f;
-	private Vector3 target;
+	public Vector3 target;
 	private Quaternion rot;
 	private bool selected = false;
 	public Text cont;
@@ -29,12 +29,17 @@ public class Interaction : MonoBehaviour {
 	public int previousQuest;
 
 	public ConvoNode defaultNode;
+	public ConvoNode externalNode;
 	ConvoNode activeNode;
 	bool nodeEnd = false;
 	public ConvoContainer convoArray;
 	private bool questCheck = true;
 
 	private bool convoCheck = false;
+
+	private bool externalConvo = false;
+
+
 
 	void Start () {
 		dBox.SetActive(false);
@@ -46,6 +51,8 @@ public class Interaction : MonoBehaviour {
 		rot = transform.rotation;
 
 		convoArray.updateList();
+
+		activeNode = defaultNode;
 
 		/*
 		if(hasQuest){
@@ -80,62 +87,78 @@ public class Interaction : MonoBehaviour {
 		//does he start or end the quest?
 
 		//newnode
+		/*
 		if(hasQuest){
 			if(QuestNumber == 0){
-				Debug.Log(transform.gameObject.name + " 1");
 				if(startQuest && !GameMaster.questInProgress){
-					Debug.Log(transform.gameObject.name + " 2");
-
-					Debug.Log(transform.gameObject.name + " active node");
 					activeNode = convoArray.convos[0];
 
 				}
 				else if(endQuest&& GameMaster.questInProgress){
-					Debug.Log(transform.gameObject.name + " 3");
-
-					Debug.Log(transform.gameObject.name + " active node");
 					activeNode = convoArray.convos[0];
 
 				} else {
-					Debug.Log(transform.gameObject.name + " 4");
-
-					Debug.Log(transform.gameObject.name + " default node");
 					activeNode = defaultNode;
-
 				}
 			} else {
 				if(QuestManager.QM.questComplete[QuestNumber-1]){
 					if(startQuest && !GameMaster.questInProgress){
-						Debug.Log(transform.gameObject.name + " active node");
 						activeNode = convoArray.convos[0];
 
 					}
 					if(endQuest&& GameMaster.questInProgress){
-						Debug.Log(transform.gameObject.name + " active node");
 						activeNode = convoArray.convos[0];
 
 					}
 				}
 			}
 		}
-		//defaultnode
 		else {
-			Debug.Log(transform.gameObject.name + " default node");
 			activeNode = defaultNode;
 		}
+	*/
+	}
 
+	public void reset(){
+		externalNode = null;
+		activeNode = defaultNode;
+		externalConvo = false;
+		/*
+		if(hasQuest){
+			if(QuestNumber == 0){
+				if(startQuest && !GameMaster.questInProgress){
+					activeNode = convoArray.convos[0];
 
-		//Debug.Log(transform.gameObject.name + " is active now");
+				}
+				else if(endQuest&& GameMaster.questInProgress){
+					activeNode = convoArray.convos[0];
 
+				} else {
+					activeNode = defaultNode;
+				}
+			} else {
+				if(QuestManager.QM.questComplete[QuestNumber-1]){
+					if(startQuest && !GameMaster.questInProgress){
+						activeNode = convoArray.convos[0];
+
+					}
+					if(endQuest&& GameMaster.questInProgress){
+						activeNode = convoArray.convos[0];
+
+					}
+				}
+			}
+		}
+		else {
+			activeNode = defaultNode;
+		}
+		*/
 
 	}
 
-
 	void Update () {
-		
-
 		if(target != Vector3.zero){
-			Debug.Log(target + " | " + transform.position);
+			//Debug.Log(target + " | " + transform.position);
 			Quaternion rotation1 = Quaternion.LookRotation(target-transform.position);
 			this.transform.rotation = Quaternion.Slerp(transform.rotation, rotation1,Time.deltaTime*10);
 			//this.transform.rotation = rotation1;
@@ -165,11 +188,19 @@ public class Interaction : MonoBehaviour {
 				activeText = false;
 				index = 0;
 				GameMaster.talking = false;
+				//reset();
 			}
 		}
 
 		//conversationTest(a);
 		cont.text = "Press Space to continue.";
+
+		if(externalConvo){
+			activeNode = convoArray.convos[0];
+			convoArray.updateList();
+			externalConvo = false;
+
+		} 
 
 		if(activeText){
 			triggerBranch();
@@ -187,7 +218,9 @@ public class Interaction : MonoBehaviour {
 		dBox.SetActive(true);
 	}
 
-
+	public void ExternalConvo(){
+		externalConvo = true;
+	}
 
 	public void isSelected(){
 		selected = true;
@@ -215,6 +248,7 @@ public class Interaction : MonoBehaviour {
 			if(activeNode.hasNext()){
 				activeNode = activeNode;
 			}
+
 		} 
 
 		if(nodeEnd && activeNode.hasB() && Input.GetKeyDown(KeyCode.L)){
@@ -230,7 +264,6 @@ public class Interaction : MonoBehaviour {
 	}
 
 	void triggerBranch(){
-		Debug.Log(index + " | " + activeNode.getLines().Length);
 		if(index+1 >= activeNode.getLines().Length){
 			nodeEnd = true;
 			if(activeNode.hasNext()){
@@ -244,6 +277,7 @@ public class Interaction : MonoBehaviour {
 
 		if(nodeEnd && activeNode.hasA() && Input.GetKeyDown(KeyCode.K)){
 			index=0;
+			GameMaster.currentChoice = 1;
 			activeNode = activeNode.getA();
 			if(activeNode.hasNext()){
 				activeNode = activeNode;
@@ -253,18 +287,15 @@ public class Interaction : MonoBehaviour {
 
 		if(nodeEnd && activeNode.hasB() && Input.GetKeyDown(KeyCode.L)){
 			index=0;
-
+			GameMaster.currentChoice = 2;
 			activeNode = activeNode.getB();
 			if(activeNode.hasNext()){
 				activeNode = activeNode;
 			}
 		} 
-
-		QuestInteraction();
+		//if(hasQuest)
+		//	QuestInteraction();
 	}
-
-
-
 
 	void QuestInteraction(){
 		
@@ -294,42 +325,19 @@ public class Interaction : MonoBehaviour {
 
 			QuestManager.QM.quests[QuestNumber].EndQuest();
 			hasQuest = false;
-			Debug.Log(this.transform.gameObject.name + " is ending quest");
 			GameMaster.questInProgress = false;
 		}
 	}
 
-/*
-	void conversation(string[] lines){
 
-		if(activeText && Input.GetKeyDown(KeyCode.Space)){
-			index++;
-		}
-
-		if(activeText && Input.GetKeyDown(KeyCode.F)){
-			closeConvo();
-		}
-
-
-
-
-		//dialogues.Length
-		if(index >= currentLinesLength){
-			index = 0;
-		}
-
-
-		dText.text = lines[index];
-
-	}
-*/
 	public void conversationTest(ConvoNode node){
-		int currentLength = node.getLines().Length;
+
 		if(activeText && Input.GetKeyDown(KeyCode.Space)){
 			index++;
 		}
 
 		if(!node.hasNext() && activeText && Input.GetKeyDown(KeyCode.F)){
+			GameMaster.currentChoice = 3;
 			closeConvo();
 		}
 

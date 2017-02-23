@@ -16,7 +16,7 @@ public class QuestManager : MonoBehaviour {
 			QM = this;
 		
 		questComplete = new bool[quests.Length];
-		Debug.Log("I'm alive");
+
 	}
 
 

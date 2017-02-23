@@ -6,19 +6,44 @@ public class QuestTrigger : MonoBehaviour {
 	public bool startQuest;
 	public bool endQuest;
 	public int QuestNumber;
-	public string[] newDialogue;
-	public string[] tempDialogue;
 	public bool requirePrevious;
 	public int previousQuest;
 
 	void Start () {
-		previousQuest = QuestNumber-1;
-	}
-	
-	void Update () {
-
+		if(QuestNumber!=0)
+			previousQuest = QuestNumber-1;
 	}
 
+
+	void OnTriggerEnter(Collider other){
+		if(QuestNumber==0){
+			if(other.tag == "Player" && !QuestManager.QM.questComplete[QuestNumber]){
+				if(startQuest && !QuestManager.QM.quests[QuestNumber].gameObject.activeSelf){
+					QuestManager.QM.quests[QuestNumber].gameObject.SetActive(true);
+					this.gameObject.SetActive(false);
+				}
+			}
+		}
+		if(QuestNumber!=0){
+			if(other.tag == "Player" && !QuestManager.QM.questComplete[QuestNumber] && QuestManager.QM.questComplete[previousQuest]){
+				if(startQuest && !QuestManager.QM.quests[QuestNumber].gameObject.activeSelf){
+					QuestManager.QM.quests[QuestNumber].gameObject.SetActive(true);
+					this.gameObject.SetActive(false);
+
+				}
+			}
+		}
+
+		if(endQuest && QuestManager.QM.quests[QuestNumber].gameObject.gameObject.activeSelf){
+			//Debug.Log(endQuest);
+			QuestManager.QM.quests[QuestNumber].EndQuest();
+			this.gameObject.SetActive(false);
+
+		}
+			
+	}
+
+	/*
 	void QuestInteraction(Collider other){
 		if(QuestNumber==0){
 			if(Input.GetKeyUp(KeyCode.Space) && other.tag == "Player" && !QuestManager.QM.questComplete[QuestNumber]){
@@ -50,4 +75,5 @@ public class QuestTrigger : MonoBehaviour {
 		}
 
 	}
+	*/
 }

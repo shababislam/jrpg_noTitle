@@ -48,7 +48,9 @@ public class GameMaster : MonoBehaviour {
 	public static bool canMove = true;
 	public static bool talking = false;
 
-	
+	public static int state;
+	public static int currentChoice;
+
 	void Start () {
 		if(!GamemasterExists){
 			GamemasterExists = true;
@@ -59,6 +61,8 @@ public class GameMaster : MonoBehaviour {
 
 
 		currentQuest = 0;
+		state = 0;
+		currentChoice = 0;
 
 		Damien = (GameObject)Instantiate(Damien);
 		Tre = (GameObject)Instantiate(Tre);
@@ -90,6 +94,9 @@ public class GameMaster : MonoBehaviour {
 		//overworldCam = mainCam.GetComponent<OverworldCam>();
 		//smoothFollowCam = mainCam.GetComponent<SmoothFollowCamera>();
 		cr = mainCam.GetComponent<CanvasRotationFix>();
+
+
+		/* INITIAL STORYLINE QUEST*/
 
 
 	}
@@ -154,6 +161,7 @@ public class GameMaster : MonoBehaviour {
 			GFXCam.fieldOfView = f;
 		}
 	}
+		
 
 	void Update(){
 		//Debug.Log("Current quest: "+ currentQuest + " | In progress?: " + questInProgress);

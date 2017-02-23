@@ -17,12 +17,19 @@ public class PortalScript : MonoBehaviour {
 	public bool moving = false;
 	public Transform rootObj;
 	public Transform currentArea;
+	private CameraFollow CameraScript;
+	private Vector3 lastPos;
 
 	void Start(){
 		if(!gm){
 			gm = GameObject.Find("_gameMaster");
 		}
+		if(!currentArea)
+			currentArea = this.transform.root;
+		
+		CameraScript = Camera.main.GetComponent<CameraFollow>();
 	}
+		
 
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Player"){
@@ -34,32 +41,44 @@ public class PortalScript : MonoBehaviour {
 			other.gameObject.GetComponent<PlayerControl>().flipSwitch();
 			currentCam.gameObject.GetComponent<CameraFollow>().turnOff();
 			*/
+			CameraScript.ScreenChange();
+
+			lastPos = transform.position;
 
 			//currentCam.gameObject.SetActive(false);
-			rootObj.gameObject.SetActive(true);
+
+			if(rootObj){
+				rootObj.gameObject.SetActive(true);
+				Camera.main.transform.SetParent(rootObj);
+			}
 			other.gameObject.GetComponent<PlayerControl>().flipSwitch();
 
-			Camera.main.transform.SetParent(rootObj);
-			Camera.main.transform.localPosition = newCam.transform.localPosition ;
-			Camera.main.transform.rotation = newCam.transform.rotation;
-			other.gameObject.transform.position = destination.position;
-			other.gameObject.transform.rotation = destination.rotation;
-			gm.GetComponent<GameMaster>().setPartyPosition(destination.gameObject);
-			Camera.main.GetComponent<CameraFollow>().xLower = xLower;
-
-			Camera.main.GetComponent<CameraFollow>().xLower = xLower;
-			Camera.main.GetComponent<CameraFollow>().xUpper = xUpper;
-			Camera.main.GetComponent<CameraFollow>().zLower = zLower;
-			Camera.main.GetComponent<CameraFollow>().zUpper = zUpper;
-			Camera.main.GetComponent<CameraFollow>().yVal = yVal;
-			Camera.main.GetComponent<CameraFollow>().moveSpeed = moveSpeed;
-			Camera.main.GetComponent<CameraFollow>().moving = moving;
-			if(camTarget){
-				Camera.main.GetComponent<CameraFollow>().cameraTarget = camTarget;
+			if(moving && lastPos!=Vector3.zero){
+				Camera.main.transform.position = lastPos;
 			} else {
-				Camera.main.GetComponent<CameraFollow>().cameraTarget = null;
+				Camera.main.transform.localPosition = newCam.transform.localPosition;
 			}
-			currentArea.gameObject.SetActive(false);
+			Camera.main.transform.rotation = newCam.transform.rotation;
+			//other.gameObject.transform.position = destination.position;
+			//other.gameObject.transform.rotation = destination.rotation;
+			//gm.GetComponent<GameMaster>().setPartyPosition(destination.gameObject);
+			CameraScript.xLower = xLower;
+
+			CameraScript.xLower = xLower;
+			CameraScript.xUpper = xUpper;
+			CameraScript.zLower = zLower;
+			CameraScript.zUpper = zUpper;
+			CameraScript.yVal = yVal;
+			CameraScript.moveSpeed = moveSpeed;
+			CameraScript.moving = moving;
+			if(camTarget){
+				CameraScript.cameraTarget = camTarget;
+			} else {
+				CameraScript.cameraTarget = null;
+			}
+			if(rootObj)
+				currentArea.gameObject.SetActive(false);
+
 			//newCam.gameObject.SetActive(true);
 
 			/*

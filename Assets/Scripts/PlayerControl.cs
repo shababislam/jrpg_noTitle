@@ -116,9 +116,6 @@ public class PlayerControl : MonoBehaviour {
 		}
 		checkFront();
 
-		//Debug.Log(counter + ", "+ canMove);
-
-
 	}
 
 	private void checkFront(){

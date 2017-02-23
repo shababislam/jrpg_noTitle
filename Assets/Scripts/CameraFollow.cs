@@ -22,13 +22,20 @@ public class CameraFollow : MonoBehaviour {
 	private Vector3 lastPos;
 	private Vector3 camTargetPos;
 
+
+	/*
+	 * TO-DO
+	 * - change the camera FOV for scene
+	*/
+
+
 	void Start () {
 		if(!target)
 			target = GameObject.FindGameObjectWithTag("Player").transform;
 
 		camTargetPos = cameraTarget.position;
 	}
-
+		
 
 	void Update () {
 		if(!target)
@@ -71,6 +78,11 @@ public class CameraFollow : MonoBehaviour {
 	
 	}
 
+
+	public void ScreenChange(){
+		screenColor = 1f;
+
+	}
 
 	public void turnOff(){
 		lastPos = transform.position;
