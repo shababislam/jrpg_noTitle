@@ -174,6 +174,7 @@ public class Interaction : MonoBehaviour {
 			
 
 		if(opening){
+			GameMaster.canMove = false;
 			dBox.transform.localScale += new Vector3(0.5f,0.5f,0.5f) * speechBubbleTime *Time.deltaTime;
 			if(dBox.transform.localScale.x > 1f){
 				opening = false;
@@ -187,6 +188,7 @@ public class Interaction : MonoBehaviour {
 				dBox.SetActive(false);
 				activeText = false;
 				index = 0;
+				GameMaster.canMove = true;
 				GameMaster.talking = false;
 				//reset();
 			}
@@ -203,6 +205,7 @@ public class Interaction : MonoBehaviour {
 		} 
 
 		if(activeText){
+			GameMaster.canMove = false;
 			triggerBranch();
 			conversationTest(activeNode);
 		}
@@ -338,6 +341,7 @@ public class Interaction : MonoBehaviour {
 
 		if(!node.hasNext() && activeText && Input.GetKeyDown(KeyCode.F)){
 			GameMaster.currentChoice = 3;
+			//GameMaster.canMove = true;
 			closeConvo();
 		}
 

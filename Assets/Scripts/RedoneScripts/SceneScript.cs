@@ -8,13 +8,17 @@ public class SceneScript : MonoBehaviour {
 	public Transform[] scenePeople;
 
 	void Start () {
+		/*
 		if(scenePeople!=null)
 			populateScene(scenePeople);
+
+*/
 	}
 	
 	void onEnable(){
+		/*
 		if(scenePeople!=null)
-			populateScene(scenePeople);
+			populateScene(scenePeople);*/
 		
 	}
 

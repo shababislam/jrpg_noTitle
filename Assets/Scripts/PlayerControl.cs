@@ -33,7 +33,8 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		if(GameMaster.canMove){
+			
 		//Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"),0);
 		//Vector3 input = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"),CrossPlatformInputManager.GetAxisRaw("Vertical"),0);
 			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
@@ -48,24 +49,6 @@ public class PlayerControl : MonoBehaviour {
 			if(walkDirection.sqrMagnitude > 1f){
 				walkDirection = walkDirection.normalized;
 			}
-			/*
-			//Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
-
-			if (!(input == Vector3.zero)){
-				targetRotation = Quaternion.LookRotation(input);
-				transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y,targetRotation.eulerAngles.y,rotSpeed * Time.deltaTime);
-			}
-				
-			Vector3 motion = input;
-			motion *= (Mathf.Abs(input.x) == 1 && Mathf.Abs(input.z) == 1)?0.7f:1;
-			motion *= (Input.GetButton("Run"))?runSpeed:walkSpeed;
-
-			motion+=Vector3.up*-8;
-			animator.SetFloat("Speed",Mathf.Sqrt(motion.x * motion.x + motion.z * motion.z));
-			controller.Move(motion * Time.deltaTime);
-			*/
-
-
 
 			if(Input.GetButton("Run") && !(input == Vector3.zero)){
 				newRun+=accel;
@@ -93,35 +76,40 @@ public class PlayerControl : MonoBehaviour {
 			animator.SetFloat("Speed",sp);
 
 
-		if(GameMaster.canMove){
-
 			if (!(input == Vector3.zero)){
 				targetRotation = Quaternion.LookRotation(walkDirection);
 				transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle(transform.eulerAngles.y,targetRotation.eulerAngles.y,rotSpeed * Time.deltaTime);
 			}
 			controller.Move(walkDirection * Time.deltaTime);
 
-		} 
-		if(GameMaster.talking){
+			checkFront();
+
+
+		} else {
+			animator.SetFloat("Speed",0);
+		}
+		/*if(GameMaster.talking){
 			GameMaster.canMove = false;
 			animator.SetFloat("Speed", 0);
 			Vector3 noMove = new Vector3(0,-8,0);
 			controller.Move(noMove * Time.deltaTime);
 
 		}
+
+		/*
 		if(!GameMaster.canMove && !GameMaster.talking){
 			animator.SetFloat("Speed", 0);
 			Vector3 noMove = new Vector3(0,-8,0);
 			controller.Move(noMove * Time.deltaTime);
-			/*
+
 			counter+=0.01f;
 			if(counter>=1){
 				GameMaster.canMove = true;
 				counter = 0;
-			} //
+			} 
 
-		}
-		checkFront();
+		} */
+
 
 	}
 
@@ -140,7 +128,7 @@ public class PlayerControl : MonoBehaviour {
 
 			if(Input.GetKeyUp(KeyCode.Space)){
 				if(!dLine.activeText){
-					GameMaster.talking = true;
+					//GameMaster.talking = true;
 					dLine.ShowBox(transform.position);
 				}
 			}

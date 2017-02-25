@@ -16,12 +16,12 @@ public class CameraFollow : MonoBehaviour {
 	public float moveSpeed = 1f;
 
 	public bool moving = false;
-	public bool cameraActive = true;
+	//public bool cameraActive = true;
 	private float screenColor = 1f;
 
 	private Vector3 lastPos;
 	private Vector3 camTargetPos;
-
+	private bool startUp;
 
 	/*
 	 * TO-DO
@@ -34,14 +34,20 @@ public class CameraFollow : MonoBehaviour {
 			target = GameObject.FindGameObjectWithTag("Player").transform;
 
 		camTargetPos = cameraTarget.position;
+		startUp = true;
 	}
 		
+	void onEnable(){
+		
+		startUp = true;
+	}
 
 	void Update () {
 		if(!target)
 			target = GameObject.FindGameObjectWithTag("Player").transform;
 		
 		//cameraTarget.position = Vector3.Lerp(cameraTarget.position,target.position, Time.deltaTime*0.8f);
+		/*
 		if(!cameraActive){
 			screenColor+=0.01f;
 			if(screenColor>=1){
@@ -52,8 +58,20 @@ public class CameraFollow : MonoBehaviour {
 		} else {
 			screenColor-=0.01f;
 			if(screenColor<=0){
+				GameMaster.canMove = true;
 				screenColor = 0;
 			}
+		} */
+
+		if(startUp){
+			screenColor-=0.01f;
+			if(screenColor<=0){
+				GameMaster.canMove = true;
+				startUp = false;
+				screenColor = 0;
+			}
+			Debug.Log(startUp + ", "+screenColor);
+
 		}
 
 		if(!moving){
@@ -79,20 +97,23 @@ public class CameraFollow : MonoBehaviour {
 	}
 
 
-	public void ScreenChange(){
-		screenColor = 1f;
 
+	public void ScreenChange(){
+		GameMaster.canMove = false;
+		screenColor = 1f;
+		startUp = true;
 	}
+
 
 	public void turnOff(){
 		lastPos = transform.position;
 		if(cameraTarget){
 			cameraTarget.gameObject.SetActive(false);
 		}
-		cameraActive = false;
+		startUp = false;
 
 	}
-
+	/*
 	public void turnOn(){
 		screenColor = 1f;
 		if(lastPos!=Vector3.zero){
@@ -104,7 +125,13 @@ public class CameraFollow : MonoBehaviour {
 		}
 		transform.gameObject.SetActive(true);
 
-		cameraActive = true;
+		startUp = true;
+	}*/
+
+	public void turnOn(){
+		GameMaster.canMove = false;
+		screenColor = 1f;
+		startUp = true;
 	}
 
 	void OnGUI(){
