@@ -165,7 +165,8 @@ public class GameMaster : MonoBehaviour {
 
 	void Update(){
 		//Debug.Log("Current quest: "+ currentQuest + " | In progress?: " + questInProgress);
-
+		if (Input.GetKey(KeyCode.Escape))
+			Application.Quit();
 	}
 	/*
 	void Update () {

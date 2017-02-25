@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 //[RequireComponent (typeof (CharacterController))]
 
 public class PlayerControl : MonoBehaviour {
@@ -32,10 +33,15 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		//Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),Input.GetAxisRaw("Vertical"),0);
+		//Vector3 input = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"),CrossPlatformInputManager.GetAxisRaw("Vertical"),0);
 			Vector3 forward = Camera.main.transform.TransformDirection(Vector3.forward);
 			forward.y = 0f;
 			forward = forward.normalized;
 			Vector3 right = new Vector3(forward.z,0.0f,-forward.x);
+			//Vector3 input = new Vector3(CrossPlatformInputManager.GetAxisRaw("Horizontal"),0,CrossPlatformInputManager.GetAxisRaw("Vertical"));
+
 			Vector3 input = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
 
 			Vector3 walkDirection =  (input.x * right + input.z * forward);
@@ -43,7 +49,7 @@ public class PlayerControl : MonoBehaviour {
 				walkDirection = walkDirection.normalized;
 			}
 			/*
-			Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
+			//Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
 
 			if (!(input == Vector3.zero)){
 				targetRotation = Quaternion.LookRotation(input);
@@ -107,11 +113,12 @@ public class PlayerControl : MonoBehaviour {
 			animator.SetFloat("Speed", 0);
 			Vector3 noMove = new Vector3(0,-8,0);
 			controller.Move(noMove * Time.deltaTime);
+			/*
 			counter+=0.01f;
 			if(counter>=1){
 				GameMaster.canMove = true;
 				counter = 0;
-			}
+			} //
 
 		}
 		checkFront();

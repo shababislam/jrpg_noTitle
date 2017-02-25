@@ -74,6 +74,11 @@ public class Storyline0 : MonoBehaviour {
 			GameMaster.state = 3;
 		}
 
+		if(GameMaster.state == 3 && GameMaster.currentChoice == 3){
+			Debug.Log("This is where are right now");
+			GameMaster.state = 4;
+		}
+
 
 		//add a choice for F (choice = 3)
 		//Debug.Log("We are at state: "+GameMaster.state + ". Our choice is: "+GameMaster.currentChoice);
