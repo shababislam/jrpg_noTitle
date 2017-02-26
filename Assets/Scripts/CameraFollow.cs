@@ -70,8 +70,6 @@ public class CameraFollow : MonoBehaviour {
 				startUp = false;
 				screenColor = 0;
 			}
-			Debug.Log(startUp + ", "+screenColor);
-
 		}
 
 		if(!moving){

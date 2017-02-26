@@ -117,6 +117,10 @@ public class NPC_Control : MonoBehaviour {
 		interaction.ExternalConvo();
 	}
 
+	public void say(string line, float time){
+		interaction.extConvo(line, time);
+	}
+
 	public void resetConvo(){
 		resetBool = true;
 	}

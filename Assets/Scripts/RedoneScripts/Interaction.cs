@@ -5,10 +5,7 @@ using System;
 
 public class Interaction : MonoBehaviour {
 
-	//public bool hasDialogue = false;
-	//public string[] dialogues;
 	public bool hasQuest;
-	//public string[] questDialogues;
 	public GameObject dBox;
 	public GameObject selectionMarker;
 	public Text dText;
@@ -38,14 +35,15 @@ public class Interaction : MonoBehaviour {
 	private bool convoCheck = false;
 
 	private bool externalConvo = false;
+	private bool timedLine = false;
+	private float timer = 1f;
 
-
+	private float test = 5f;
 
 	void Start () {
 		dBox.SetActive(false);
 		activeText = false;
 		index = 0;
-		//dText.text = dialogues[index];
 		opening = false;
 		closing = false;
 		rot = transform.rotation;
@@ -53,110 +51,29 @@ public class Interaction : MonoBehaviour {
 		convoArray.updateList();
 
 		activeNode = defaultNode;
-
-		/*
-		if(hasQuest){
-			if(QuestNumber>0)
-				previousQuest = QuestNumber-1;
-			activeNode = convoArray.convos[0];
-
-		} else {
-			activeNode = defaultNode;
-		} */ 
-
-		/*
-		if(startQuest && GameMaster.currentQuest==QuestNumber){
-
-			activeNode = convoArray.convos[0];
-		}
-		else if(endQuest && GameMaster.questInProgress && GameMaster.currentQuest==QuestNumber){
-			activeNode = convoArray.convos[0];
-		} else {
-			activeNode = defaultNode;
-
-		} 
-		*/
-		//activeNode = defaultNode;
-
+		cont.text = "Press Space to continue.";
 
 	}
 
-	void OnEnable(){
-		//does he have a quest?
-		//is the quest eligible?
-		//does he start or end the quest?
 
-		//newnode
-		/*
-		if(hasQuest){
-			if(QuestNumber == 0){
-				if(startQuest && !GameMaster.questInProgress){
-					activeNode = convoArray.convos[0];
-
-				}
-				else if(endQuest&& GameMaster.questInProgress){
-					activeNode = convoArray.convos[0];
-
-				} else {
-					activeNode = defaultNode;
-				}
-			} else {
-				if(QuestManager.QM.questComplete[QuestNumber-1]){
-					if(startQuest && !GameMaster.questInProgress){
-						activeNode = convoArray.convos[0];
-
-					}
-					if(endQuest&& GameMaster.questInProgress){
-						activeNode = convoArray.convos[0];
-
-					}
-				}
-			}
-		}
-		else {
-			activeNode = defaultNode;
-		}
-	*/
-	}
 
 	public void reset(){
 		externalNode = null;
 		activeNode = defaultNode;
 		externalConvo = false;
-		/*
-		if(hasQuest){
-			if(QuestNumber == 0){
-				if(startQuest && !GameMaster.questInProgress){
-					activeNode = convoArray.convos[0];
-
-				}
-				else if(endQuest&& GameMaster.questInProgress){
-					activeNode = convoArray.convos[0];
-
-				} else {
-					activeNode = defaultNode;
-				}
-			} else {
-				if(QuestManager.QM.questComplete[QuestNumber-1]){
-					if(startQuest && !GameMaster.questInProgress){
-						activeNode = convoArray.convos[0];
-
-					}
-					if(endQuest&& GameMaster.questInProgress){
-						activeNode = convoArray.convos[0];
-
-					}
-				}
-			}
-		}
-		else {
-			activeNode = defaultNode;
-		}
-		*/
 
 	}
 
 	void Update () {
+
+		if(timedLine){
+			timer-=0.01f;
+			if(timer<=0){
+				timer = 0;
+				timedLine = false;
+				extConvoClose();
+			}
+		}
 		if(target != Vector3.zero){
 			//Debug.Log(target + " | " + transform.position);
 			Quaternion rotation1 = Quaternion.LookRotation(target-transform.position);
@@ -174,7 +91,8 @@ public class Interaction : MonoBehaviour {
 			
 
 		if(opening){
-			GameMaster.canMove = false;
+			
+			//GameMaster.canMove = false;
 			dBox.transform.localScale += new Vector3(0.5f,0.5f,0.5f) * speechBubbleTime *Time.deltaTime;
 			if(dBox.transform.localScale.x > 1f){
 				opening = false;
@@ -182,6 +100,8 @@ public class Interaction : MonoBehaviour {
 		}
 
 		if(closing){
+			cont.text = "Press Space to continue.";
+
 			dBox.transform.localScale -= new Vector3(0.5f,0.5f,0.5f) * speechBubbleTime *Time.deltaTime;
 			if(dBox.transform.localScale.x < 0.1f){
 				closing = false;
@@ -194,8 +114,8 @@ public class Interaction : MonoBehaviour {
 			}
 		}
 
-		//conversationTest(a);
-		cont.text = "Press Space to continue.";
+		//take this out of update
+		//cont.text = "Press Space to continue.";
 
 		if(externalConvo){
 			activeNode = convoArray.convos[0];
@@ -278,7 +198,7 @@ public class Interaction : MonoBehaviour {
 			nodeEnd = false;
 		}
 
-		if(nodeEnd && activeNode.hasA() && Input.GetKeyDown(KeyCode.K)){
+		if(nodeEnd && activeNode.hasA() && Input.GetKeyUp(KeyCode.K)){
 			index=0;
 			GameMaster.currentChoice = 1;
 			activeNode = activeNode.getA();
@@ -288,7 +208,7 @@ public class Interaction : MonoBehaviour {
 		} 
 
 
-		if(nodeEnd && activeNode.hasB() && Input.GetKeyDown(KeyCode.L)){
+		if(nodeEnd && activeNode.hasB() && Input.GetKeyUp(KeyCode.L)){
 			index=0;
 			GameMaster.currentChoice = 2;
 			activeNode = activeNode.getB();
@@ -296,8 +216,6 @@ public class Interaction : MonoBehaviour {
 				activeNode = activeNode;
 			}
 		} 
-		//if(hasQuest)
-		//	QuestInteraction();
 	}
 
 	void QuestInteraction(){
@@ -335,11 +253,11 @@ public class Interaction : MonoBehaviour {
 
 	public void conversationTest(ConvoNode node){
 
-		if(activeText && Input.GetKeyDown(KeyCode.Space)){
+		if(activeText && Input.GetKeyUp(KeyCode.Space)){
 			index++;
 		}
 
-		if(!node.hasNext() && activeText && Input.GetKeyDown(KeyCode.F)){
+		if(!node.hasNext() && activeText && Input.GetKeyUp(KeyCode.F)){
 			GameMaster.currentChoice = 3;
 			//GameMaster.canMove = true;
 			closeConvo();
@@ -354,22 +272,39 @@ public class Interaction : MonoBehaviour {
 
 	}
 
+	public void extConvo(string line, float time){
+		cont.text = "";
+
+		dText.text = line;
+		timedLine = true;
+		timer = time;
+		opening = true;
+		dBox.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+		dBox.SetActive(true);
+
+	}
+
+	private void extConvoClose(){
+		closing = true;
+	}
+
 
 	void closeConvo(){
+		cont.text = "Press Space to continue.";
 		closing = true;
 		target = Vector3.zero;
 		if(activeNode.returnToStart)
 			activeNode = convoArray.convos[0];
 	}
 
-	public void newConvo(ConvoContainer container){
-		activeNode = container.convos[0];
+	public IEnumerator testFunc(){
+		if(test!=0){
+			test-=0.01f;
+			if(test<=0){
+				test = 0;
+			}
+		}
+		yield return test;
 	}
-
-	public void newConvo(ConvoNode node){
-		activeNode = node;
-	}
-
-
 
 }

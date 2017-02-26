@@ -12,10 +12,10 @@ public class DialogueManager : MonoBehaviour {
 	void Start () {
 		
 	}
-	
+	/*
 	void Update () {
 		if(dialogueActive && Input.GetKeyDown(KeyCode.Space)){
 			dBox.SetActive(false);
 		}
-	}
+	}*/
 }
