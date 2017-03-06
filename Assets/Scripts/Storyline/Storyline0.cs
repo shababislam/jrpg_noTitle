@@ -18,8 +18,8 @@ public class Storyline0 : MonoBehaviour {
 	private int currentChoice;
 	public GameObject trigger0;
 	public GameObject trigger1;
-	
-	public GameObject areaBlock;
+
+    public GameObject areaBlock;
 
 	// Use this for initialization
 	void Start () {
@@ -87,12 +87,19 @@ public class Storyline0 : MonoBehaviour {
 
 			trigger1.SetActive(true);
 			ViolaControl.resetConvo();
-			GameMaster.state = 3;
-		}
+            GameMaster.state = 3;
+            if (GameMaster.currentChoice == 3 && !ViolaControl.dBox.activeSelf)
+            {
+                Debug.Log("heheheheh");
+            }
 
 
-		if(GameMaster.state == 3 && GameMaster.currentChoice == 3){
+        }
+
+
+        if (GameMaster.state == 3 && GameMaster.currentChoice == 3){
 			VillagerControl.say("oi dude", 1);
+            
 			//GameMaster.state = 4;
 		}
 		/*
@@ -106,7 +113,7 @@ public class Storyline0 : MonoBehaviour {
 
 
 		//add a choice for F (choice = 3)
-		Debug.Log("We are at state: "+ GameMaster.state + ". Our choice is: "+ GameMaster.currentChoice);
+		//Debug.Log("We are at state: "+ GameMaster.state + ". Our choice is: "+ GameMaster.currentChoice);
 
 
 	}

@@ -69,8 +69,10 @@
                 o.uv+=_Time/_MoveX;
                 o.uv.y+=_Time/_MoveY;
 
-//				half offsetVert = v.vertex.x * v.vertex.z;
-				half offsetVert = v.vertex.x * v.vertex.x + v.vertex.z + v.vertex.z;
+//				half offsetVert = v.vertex.x * v.vertex.z;  
+//main				half offsetVert = v.vertex.x * v.vertex.x + v.vertex.z + v.vertex.z;
+
+				half offsetVert = v.vertex.x * v.vertex.x + v.vertex.z + 0.03f;
 
                 half movement = _Scale * sin(_Time.w * _Speed + offsetVert * _Freq);
 

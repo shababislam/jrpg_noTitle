@@ -78,6 +78,7 @@ public class Interaction : MonoBehaviour {
 			//Debug.Log(target + " | " + transform.position);
 			Quaternion rotation1 = Quaternion.LookRotation(target-transform.position);
 			this.transform.rotation = Quaternion.Slerp(transform.rotation, rotation1,Time.deltaTime*10);
+
 			//this.transform.rotation = rotation1;
 		} 
 
@@ -139,6 +140,7 @@ public class Interaction : MonoBehaviour {
 		dBox.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
 		activeText = true;
 		dBox.SetActive(true);
+
 	}
 
 	public void ExternalConvo(){

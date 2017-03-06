@@ -116,7 +116,7 @@ public class PlayerControl : MonoBehaviour {
 	private void checkFront(){
 		Vector3 fwd = transform.TransformDirection(Vector3.forward);
 		RaycastHit hit;
-		Debug.DrawRay(transform.position,fwd,Color.green);
+		//Debug.DrawRay(transform.position,fwd,Color.green);
 		if (Physics.SphereCast(transform.position,3f,fwd,out hit,6) && hit.transform.GetComponent<Interaction>()){
 			//hit.transform.GetComponent<DialogueSet>().isSelected();
 			if(target==null)

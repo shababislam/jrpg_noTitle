@@ -37,22 +37,16 @@ public class NPC_Control : MonoBehaviour {
 		//transform.position.y = currentPos.y;
 
 		if(dBox.activeSelf){
-			talking = true;
-			anim.SetBool("Talking",true);
-		} else {
-			talking = false;
-			anim.SetBool("Talking",false);
+			talk();
+		} 
+		if(!dBox.activeSelf && talking){
+			shutUp();
+		}
+		if(!talking && transform.rotation != rotation){
 			resetRotation();
 		}
-		/*
-		if(!dBox.activeSelf){
-			talking = false;
-			anim.SetBool("Talking",false);
-			resetRotation();
-		}*/
 			
 		if(movingTowards && targetPos!=Vector3.zero){
-
 			move();
 		}
 
@@ -62,6 +56,20 @@ public class NPC_Control : MonoBehaviour {
 			interaction.reset();
 		}
 
+	}
+
+	void talk(){
+		talking = true;
+		if(anim.GetBool("Talking") != true)
+			anim.SetBool("Talking",true);
+
+	}
+
+	void shutUp(){
+		talking = false;
+		if(anim.GetBool("Talking") == true)
+			anim.SetBool("Talking",false);
+		//resetRotation();
 	}
 
 	void move(){

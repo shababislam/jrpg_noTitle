@@ -32,6 +32,7 @@ public class WaterMovement : MonoBehaviour
 		curY+=Time.deltaTime*moveY;
 		rend.material.SetTextureOffset("_MainTex",new Vector2(curX,curY));
 
+		/*
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 
 		if (baseHeight == null)
@@ -48,5 +49,6 @@ public class WaterMovement : MonoBehaviour
 		}
 		mesh.vertices = vertices;
 		mesh.RecalculateNormals();
+		*/
 	}
 }

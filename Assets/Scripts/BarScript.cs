@@ -7,6 +7,8 @@ public class BarScript : MonoBehaviour {
 	public Image bar;
 	public float fillAmount;
 
+	float stagger = 5f;
+
 	// Use this for initialization
 	private void Start(){
 		fillAmount = 1;
@@ -14,12 +16,18 @@ public class BarScript : MonoBehaviour {
 	}
 
 	private void Update(){
-		updateBar();
 		if(GameMaster.fighting){
 			bar.enabled = true;
 		} else {
 			bar.enabled = false;
 		}
+		updateBar();
+
+		/*
+		if(stagger-- <= 0){
+			updateBar();
+			stagger = 5;
+		}*/
 	}
 
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class EventManager : MonoBehaviour {
 
 	public static EventManager EM;
-	public Event[] events;
+	public GameEvent[] events;
 	//public int[] eventNumbers;
 
 	// Use this for initialization
